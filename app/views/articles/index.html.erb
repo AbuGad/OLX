@@ -1,5 +1,6 @@
 <h1>Listing Articles</h1>
 
+<%= link_to 'Create New Article', new_article_path %></p>
 <table>
 	<tr>
 		<th>Title</th>
@@ -7,9 +8,13 @@
 	</tr>
 
 	<% @articles.each do |t| %>
+	
 	<tr>
-		<th><%= t.title %></th>
-		<th><%= t.description %></th>
+		<th> <%= t.title %> </th>
+		<th> <%= t.description %> </th>
+		<th> <%= link_to 'delete', article_path(t), method: :delete, data: {confirm: 'Are You Sure'} %> </th>
+		<th> // <%= link_to 'edit', edit_article_path(t) %> // </th>
+		<th> <%= link_to 'showing article', article_path(t) %></th>
 	</tr>
 	<%end%>
 </table>
