@@ -1,20 +1,33 @@
-<h1>Listing Articles</h1>
-<p>
-	<%= link_to 'Create New Article', new_article_path %></p>
-</p>
-<table>
-	<tr>
-		<th>Title</th>
-		<th>Description</th>
-	</tr>
-
+<h1 align="center">Listing Articles</h1> 
+<div align="center"><%= will_paginate %></div>
+<div align="center">
 	<% @articles.each do |t| %>
-		<tr>
-			<td> <%= t.title %></td> 
-			<td> <%= t.description %></td>
-			<th> <%= link_to 'delete', article_path(t), method: :delete, data: {confirm: 'Are You Sure'} %> </th>
-			<th> // <%= link_to 'edit', edit_article_path(t) %> // </th>
-			<th> <%= link_to 'showing article', article_path(t) %></th>
-		</tr>
-	<%end%>
-</table>
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-2">
+				<div class="well well-lg">
+					<div class="article-title">
+			 			<%= link_to t.title, article_path(t) %>
+					</div>
+					<div class="article-body">
+						<%= truncate(t.description, lenght: 100) %>
+						<div class="article-meta">
+							<small> Created By: <%= t.user.username if t.user %>,
+												<%= time_ago_in_words(t.created_at) %> ago,
+									last Updated: <%= time_ago_in_words(t.updated_at) %> ago
+							</small>
+						</div>				
+					</div>
+					<% if logged_in? && curent_user == t.user%>
+						<div class="article-actions">
+							<%=link_to "Edit", edit_article_path(t), class: 'btn btn-xs btn-primary' %> |
+							<%= link_to "Delete", article_path(t), method: :delete,
+				 				data: {confirm:'are u sure'},
+				 				class: 'btn btn-xs btn-danger' %>	
+						</div>
+					<% end %>
+				</div>
+			</div>
+		</div> 		
+	<%end%>	
+</div>
+<div align="center"><%= will_paginate %></div>
