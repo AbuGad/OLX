@@ -20,15 +20,18 @@
         <%end%>
         <li><%= link_to 'Listing All Article', articles_path, id: 'create-action' %></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><%= link_to 'All Categories', categories_path %></li>
+            <% Category.all.each do |c| %>
+            <li>
+              <%= link_to "#{c.name}", category_path(c)%>
+            </li>
+            <%end%>
+            <% if logged_in? and curent_user.admin? %>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+              <li><%= link_to 'Create New Category',new_category_path%></li>
+            <% end %>
           </ul>
         </li>
       </ul>
@@ -42,7 +45,7 @@
         <% if logged_in? %>
           <li><%= link_to 'log out', logout_path, method: :delete %></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Your Profile <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Your Profile <%= 'Admin' if curent_user.admin? %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><%= link_to 'Edit', edit_user_path(curent_user)%></li>
               <li><%= link_to 'View Profile', user_path(curent_user

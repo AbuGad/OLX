@@ -17,7 +17,10 @@
 							</small>
 						</div>				
 					</div>
-					<% if logged_in? && curent_user == t.user%>
+					<% if t.categories.any? %>
+						<p>Categories: <%= render t.categories%> </p>
+					<%end%>
+					<% if logged_in? && (curent_user == t.user || curent_user.admin?) %>
 						<div class="article-actions">
 							<%=link_to "Edit", edit_article_path(t), class: 'btn btn-xs btn-primary' %> |
 							<%= link_to "Delete", article_path(t), method: :delete,
