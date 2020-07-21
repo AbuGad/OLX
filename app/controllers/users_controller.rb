@@ -46,6 +46,34 @@ class UsersController < ApplicationController
 		redirect_to users_path
 	end
 
+	def my_friends
+		@friendships = curent_user.friends
+	end
+
+	def search
+		@users = User.search(params[:search_param])
+
+		if @users
+			@users = curent_user.except_curent_user(@users)
+			render partial: 'friends/lookup'
+		else
+			render status: :not_found, nothing: true
+		end
+	end
+
+	def add_friend
+		@friend= User.find(params[:friend])
+		curent_user.friendships.build(friend_id: @friend.id)
+
+		if curent_user.save
+			redirect_to my_friends_path
+			flash[:notice] = 'You Now Friend'
+		else
+			redirect_to my_friends_path
+			flash[:error] = 'Some Thing Wrong'
+		end
+	end
+
 	private
 	def user_params
 		params.require(:user).permit(:username,:email,:password)

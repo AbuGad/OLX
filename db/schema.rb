@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_16_204320) do
+ActiveRecord::Schema.define(version: 2020_07_21_185927) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer "article_id"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(version: 2020_07_16_204320) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "friendships", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "friend_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["friend_id"], name: "index_friendships_on_friend_id"
+    t.index ["user_id"], name: "index_friendships_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -38,6 +47,8 @@ ActiveRecord::Schema.define(version: 2020_07_16_204320) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.boolean "admin", default: false
+    t.string "first_name"
+    t.string "last_name"
   end
 
 end

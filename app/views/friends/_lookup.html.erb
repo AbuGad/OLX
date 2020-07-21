@@ -1,0 +1,50 @@
+<div class="friend-lookup">
+	<h3>Search For Friends</h3>
+	<%= form_tag search_friends_path, remote: true, method: :get, id:'friend-lookup-form' do %>
+	<div class="form-group row no-padding text-center col-md-12">
+		<div class="col-md-10">
+			<%= text_field_tag :search_param, params[:search_param],
+			 		placeholder:'Username, Email', autofocus: true,
+					class: 'form-control search-box input-lg' %>
+		</div>
+		<div class="col-md-2">
+			<%= button_tag(type: :submit, class:'btn btn-lg btn-success') do %>
+				<i class="fa fa-search"></i> look for a friend
+			<%end%>
+		</div>
+	</div>
+	<%end%>
+	<%= render 'common/spinner' %>
+<% if @users %>
+	<% if @users.size > 0 %>
+		<div id="friend-lookup-results" class="well results-block col-md-10">
+			<table class="search-results-table col-md-12">
+				<tbody>
+					<% @users.each do |u| %>
+						<tr>
+							<td><strong>Name:</strong> <%= u.username %></td>
+							<td><strong>Email:</strong> <% u.email %></td>
+							<td><strong>Profile</strong> <%= link_to 'View Profile', user_path(u),
+																 class: 'btn btn-xs btn-success'%>
+								<% if curent_user.not_friends_with?(u.id) %>
+									<%= link_to 'Add Friend', add_friend_path(user: curent_user, friend: u)					,class: 'btn btn-xs btn-success', method: :post %>
+								<% else %>
+									<span class="label label-primary">
+										You Already Friend
+									</span>
+								<%end%>
+								<div id="friend-lookup-errors"></div>
+							</td>										 
+						</tr>
+					<%end%>
+				</tbody>
+			</table>
+		</div>
+	<%else%>
+		<p class="lead col-md-12">
+			No One With This Name
+		</p>
+	<%end%>
+<%end%>
+<div id="friend-lookup-errors"></div>
+</div>

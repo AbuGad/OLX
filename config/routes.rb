@@ -13,4 +13,11 @@ delete 'logout', to: 'sessions#destroy'
 
 resources :categories, except: [:destroy]
 
+get 'my_friends', to: 'users#my_friends'
+resources :users, only:[:show]
+resources :friendships
+
+get 'search_friends', to: 'users#search'
+get 'add_friend', to: "users#add_friend"
+
 end

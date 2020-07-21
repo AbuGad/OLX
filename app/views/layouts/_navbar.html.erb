@@ -47,9 +47,10 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Your Profile <%= 'Admin' if curent_user.admin? %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><%= link_to 'Edit', edit_user_path(curent_user)%></li>
-              <li><%= link_to 'View Profile', user_path(curent_user
+              <li><%= link_to 'Edit Profile', edit_user_path(curent_user)%></li>
+              <li><%= link_to 'View My Profile', user_path(curent_user
               ) %></li>
+              <li><%= link_to 'My Friends', my_friends_path %></li>
             </ul>
           </li>
         <% else %>
